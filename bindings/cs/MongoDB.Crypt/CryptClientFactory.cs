@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace MongoDB.Crypt
 {
@@ -26,11 +27,19 @@ namespace MongoDB.Crypt
         /// <summary>Creates a CryptClient with the specified options.</summary>
         /// <param name="options">The options.</param>
         /// <returns>A CryptClient</returns>
-        public static CryptClient Create(CryptOptions options)
+        public static CryptClient Create(CryptOptions options, Action<string> logAction = null)
         {
             MongoCryptSafeHandle handle = Library.mongocrypt_new();
 
             Status status = new Status();
+            if (logAction != null)
+            {
+                Library.Delegates.LogCallback callback = (level, message, length, context) =>
+                {
+                    logAction(Marshal.PtrToStringAnsi(message));
+                };
+                var success = Library.mongocrypt_setopt_log_handler(handle, callback, (IntPtr)null);
+            }
 
             foreach (var kmsCredentials in options.KmsCredentialsMap)
             {
