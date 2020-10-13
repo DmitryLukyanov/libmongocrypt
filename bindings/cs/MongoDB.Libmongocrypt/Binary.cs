@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace MongoDB.Libmongocrypt
@@ -65,12 +64,19 @@ namespace MongoDB.Libmongocrypt
         /// <summary>
         /// Converts to array.
         /// </summary>
-        /// <returns></returns>
         public byte[] ToArray()
         {
             byte[] arr = new byte[Length];
             Marshal.Copy(Data, arr, 0, arr.Length);
             return arr;
+        }
+
+        /// <summary>
+        /// Write bytes into Data.
+        /// </summary>
+        public void WriteBytes(byte[] bytes)
+        {
+            Marshal.Copy(bytes, 0, Data, (int)Length);
         }
 
         /// <summary>

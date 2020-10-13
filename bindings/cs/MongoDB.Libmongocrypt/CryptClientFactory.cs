@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace MongoDB.Libmongocrypt
 {
@@ -32,9 +33,20 @@ namespace MongoDB.Libmongocrypt
 
             Status status = new Status();
 
+            // The below code can be avoided on Windows. So, we don't call it on this system 
+            // to avoid the restriction on target frameworks that should be equal to or higher than .netstandard2.1
+            if (OperationSystemHelper.CurrentOperationSystem != OperationSystemPlatform.Windows)
+            {
+                var cryptoCallback = new Library.Delegates.CryptoCallback(SigningRSAESPKCSCallback.rsaSign);
+                handle.Check(
+                    status,
+                    Library.mongocrypt_setopt_crypto_hook_sign_rsaes_pkcs1_v1_5
+                    (handle, cryptoCallback, IntPtr.Zero));
+            }
+
             foreach (var kmsCredentials in options.KmsCredentialsMap)
             {
-                ((IInternalKmsCredentials)kmsCredentials.Value).SetCredentials(handle,status);
+                kmsCredentials.Value.SetCredentials(handle,status);
             }
 
             if (options.Schema != null)
