@@ -83,8 +83,8 @@ namespace MongoDB.Libmongocrypt
             }
             else
             {
-                // this code path is not expected, but it's worth doing it to avoid saving of corrupted data
-                throw new InvalidDataException($"Incorrect bytes size. The bytes size mist be {Length}.");
+                // this code path is not expected, but it's worth doing it to avoid silent saving of corrupted data
+                throw new InvalidDataException($"Incorrect bytes size. The bytes size must be {Length}.");
             }
         }
 
