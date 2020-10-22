@@ -32,7 +32,7 @@ namespace MongoDB.Libmongocrypt.Test
             + "rYEk5ireFJFz9vP8P7Ha+VDUZuQIQdXer9NBbGFtYmWprY3nn4D3Dw93Sn0V0dIqYeIo91oKyslvMebmUM95S2PyIJdEpPb2DJDxjvX/0LLwSWlSXRWy9gapWoBk"
             + "b4ynqZBsg==";
 
-        [Fact()]
+        [Fact]
         public void GetSignatureTest()
         {
             byte[] privateKeyBytes = Convert.FromBase64String(PrivateKey);

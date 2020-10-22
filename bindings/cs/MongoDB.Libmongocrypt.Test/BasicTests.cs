@@ -95,36 +95,6 @@ namespace MongoDB.Libmongocrypt.Test
                 CreateAwsCredentialsDocument().ToBson());
         #endregion
 
-        #region azure data
-        // TODO: add tests
-        /*
-        BsonDocument CreateAzureCredentialsDocument() =>
-            new BsonDocument
-            {
-                {
-                    "azure",
-                    new BsonDocument
-                    {
-                        { "tenantId", Environment.GetEnvironmentVariable("FLE_AZURE_TENANT_ID") },
-                        { "clientId", Environment.GetEnvironmentVariable("FLE_AZURE_CLIENT_ID") },
-                        { "clientSecret", Environment.GetEnvironmentVariable("FLE_AZURE_CLIENT_SECRET") }
-                    }
-                }
-            };
-
-        AwsKeyId CreateAzureKey(string endpoint = null, string keyVersion = null, IEnumerable<byte[]> keyAltNameBuffers = null) =>
-            new AwsKeyId(
-                new BsonDocument
-                {
-                    { "provider", "azure" },
-                    { "keyName", "foo" },
-                    { "keyVersion", keyVersion, keyVersion != null },
-                    { "keyVaultEndpoint", endpoint, endpoint != null }
-                }.ToBson(),
-                alternateKeyNamesBsonDocumentsBytes: keyAltNameBuffers);
-        */
-        #endregion
-
         CryptOptions CreateOptions()
         {
             return new CryptOptions(
@@ -351,23 +321,6 @@ namespace MongoDB.Libmongocrypt.Test
                 dataKeyDocument["masterKey"]["endpoint"].Should().Be(endpoint);
             }
         }
-
-        /* TODO: update json files
-        [Fact]
-        public void TestAzureKeyCreationWithEndPoint()
-        {
-            var endpoint = "login.microsoftonline.com";
-            var keyId = CreateAzureKey(endpoint);
-            var key = new AwsKmsCredentials(CreateAzureCredentialsDocument().ToBson());
-
-            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(CreateCredentialsMap(key))))
-            using (var context = cryptClient.StartCreateDataKeyContext(keyId))
-            {
-                var (_, dataKeyDocument) = ProcessContextToCompletion(context, isKmsDecrypt: false);
-                dataKeyDocument["masterKey"]["endpoint"].Should().Be(endpoint);
-            }
-        }
-        */
 
         [Fact]
         public void TestAwsKeyCreationWithEndpointStepwise()

@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace MongoDB.Libmongocrypt
@@ -76,7 +77,15 @@ namespace MongoDB.Libmongocrypt
         /// </summary>
         public void WriteBytes(byte[] bytes)
         {
-            Marshal.Copy(bytes, 0, Data, (int)Length);
+            if (Length == bytes.Length)
+            {
+                Marshal.Copy(bytes, 0, Data, (int)Length);
+            }
+            else
+            {
+                // this code path is not expected, but it's worth doing it to avoid saving of corrupted data
+                throw new InvalidDataException($"Incorrect bytes size. The bytes size mist be {Length}.");
+            }
         }
 
         /// <summary>

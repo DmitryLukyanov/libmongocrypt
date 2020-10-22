@@ -24,6 +24,6 @@ namespace MongoDB.Libmongocrypt
         Aws = 0,
         Local = 1,
         Azure = 2,
-        Gcp = 3 // google cloud platform
+        Gcp = 3 // Google Cloud Platform
     }
 }

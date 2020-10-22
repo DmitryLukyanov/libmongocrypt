@@ -24,9 +24,7 @@ namespace MongoDB.Libmongocrypt
 {
     internal static class SigningRSAESPKCSCallback
     {
-#pragma warning disable IDE1006 // Naming Styles
-        public static bool rsaSign(
-#pragma warning restore IDE1006 // Naming Styles
+        public static bool RsaSign(
             IntPtr ctx,
             IntPtr key,
             IntPtr inData,

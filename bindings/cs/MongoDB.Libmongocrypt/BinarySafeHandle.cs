@@ -42,8 +42,6 @@ namespace MongoDB.Libmongocrypt
         {
             return new BinarySafeHandle(ptr);
         }
-
-
         public override bool IsInvalid
         {
             get
