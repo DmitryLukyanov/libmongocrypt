@@ -52,7 +52,6 @@ namespace MongoDB.Libmongocrypt.Test
             };
         KmsKeyId CreateLocalKey(IEnumerable<byte[]> keyAltNameBuffers = null) =>
             new KmsKeyId(
-                KmsType.Local,
                 new BsonDocument
                 {
                     { "provider", "local" },
@@ -60,7 +59,6 @@ namespace MongoDB.Libmongocrypt.Test
                 keyAltNameBuffers);
         KmsCredentials CreateLocalKmsCredentials() =>
             new KmsCredentials(
-                KmsType.Local,
                 CreateLocalCredentialsDocument().ToBson());
         #endregion
 
@@ -79,7 +77,6 @@ namespace MongoDB.Libmongocrypt.Test
             };
         KmsKeyId CreateAwsKey(string endpoint = null, IEnumerable<byte[]> keyAltNameBuffers = null) =>
             new KmsKeyId(
-                KmsType.Aws,
                 new BsonDocument
                 {
                     { "provider", "aws" },
@@ -91,16 +88,16 @@ namespace MongoDB.Libmongocrypt.Test
 
         KmsCredentials CreateAwsKmsCredentials() =>
             new KmsCredentials(
-                KmsType.Aws,
                 CreateAwsCredentialsDocument().ToBson());
         #endregion
 
         CryptOptions CreateOptions()
         {
             return new CryptOptions(
-                CreateCredentialsMap(
+                new[] {
                     CreateAwsKmsCredentials(),
-                    CreateLocalKmsCredentials()));
+                    CreateLocalKmsCredentials()
+                });
         }
 
         [Fact]
@@ -150,7 +147,7 @@ namespace MongoDB.Libmongocrypt.Test
             var schema = new BsonDocument("test.test", listCollectionsReply["options"]["validator"]["$jsonSchema"]);
 
             var options = new CryptOptions(
-                CreateCredentialsMap(CreateAwsKmsCredentials()),
+                new[] { CreateAwsKmsCredentials() },
                 BsonUtil.ToBytes(schema));
 
             using (var cryptClient = CryptClientFactory.Create(options))
@@ -314,7 +311,7 @@ namespace MongoDB.Libmongocrypt.Test
             var keyId = CreateAwsKey(endpoint);
             var key = CreateAwsKmsCredentials();
 
-            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(CreateCredentialsMap(key))))
+            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(new[] { key })))
             using (var context = cryptClient.StartCreateDataKeyContext(keyId))
             {
                 var (_, dataKeyDocument) = ProcessContextToCompletion(context, isKmsDecrypt: false);
@@ -329,7 +326,7 @@ namespace MongoDB.Libmongocrypt.Test
             var keyId = CreateAwsKey(endpoint);
             var key = CreateAwsKmsCredentials();
 
-            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(CreateCredentialsMap(key))))
+            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(new[] { key })))
             using (var context = cryptClient.StartCreateDataKeyContext(keyId))
             {
                 BsonDocument dataKeyDocument;
@@ -354,7 +351,7 @@ namespace MongoDB.Libmongocrypt.Test
             var keyId = CreateAwsKey(keyAltNameBuffers: keyAltNameBuffers);
             var key = CreateAwsKmsCredentials();
 
-            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(CreateCredentialsMap(key))))
+            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(new[] { key })))
             using (var context = cryptClient.StartCreateDataKeyContext(keyId))
             {
                 var (_, dataKeyDocument) = ProcessContextToCompletion(context, isKmsDecrypt: false);
@@ -374,7 +371,7 @@ namespace MongoDB.Libmongocrypt.Test
             var keyId = CreateAwsKey(keyAltNameBuffers: keyAltNameBuffers);
             var key = CreateAwsKmsCredentials();
 
-            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(CreateCredentialsMap(key))))
+            using (var cryptClient = CryptClientFactory.Create(new CryptOptions(new[] { key })))
             using (var context =
                 cryptClient.StartCreateDataKeyContext(keyId))
             {
@@ -402,7 +399,7 @@ namespace MongoDB.Libmongocrypt.Test
             var keyAltNameBuffers = keyAltNameDocuments.Select(BsonUtil.ToBytes);
             var key = CreateLocalKmsCredentials();
             var keyId = CreateLocalKey(keyAltNameBuffers);
-            var cryptOptions = new CryptOptions(CreateCredentialsMap(key));
+            var cryptOptions = new CryptOptions(new[] { key });
 
             using (var cryptClient = CryptClientFactory.Create(cryptOptions))
             using (var context =
@@ -424,7 +421,7 @@ namespace MongoDB.Libmongocrypt.Test
             var keyAltNameBuffers = keyAltNameDocuments.Select(BsonUtil.ToBytes);
             var key = CreateLocalKmsCredentials();
             var keyId = CreateLocalKey(keyAltNameBuffers);
-            var cryptOptions = new CryptOptions(CreateCredentialsMap(key));
+            var cryptOptions = new CryptOptions(new[] { key });
 
             using (var cryptClient = CryptClientFactory.Create(cryptOptions))
             using (var context =
@@ -447,7 +444,7 @@ namespace MongoDB.Libmongocrypt.Test
         {
             var key = CreateLocalKmsCredentials();
             var keyId = CreateLocalKey();
-            var cryptOptions = new CryptOptions(CreateCredentialsMap(key));
+            var cryptOptions = new CryptOptions(new[] { key });
 
             using (var cryptClient = CryptClientFactory.Create(cryptOptions))
             using (var context =
@@ -464,7 +461,7 @@ namespace MongoDB.Libmongocrypt.Test
         {
             var key = CreateLocalKmsCredentials();
             var keyId = CreateLocalKey();
-            var cryptOptions = new CryptOptions(CreateCredentialsMap(key));
+            var cryptOptions = new CryptOptions(new[] { key });
 
             using (var cryptClient = CryptClientFactory.Create(cryptOptions))
             using (var context =
@@ -480,16 +477,6 @@ namespace MongoDB.Libmongocrypt.Test
         }
 
         // private methods
-        private Dictionary<KmsType, KmsCredentials> CreateCredentialsMap(params KmsCredentials[] map)
-        {
-            var dictionary = new Dictionary<KmsType, KmsCredentials>();
-            foreach (var item in map)
-            {
-                dictionary.Add(item.KmsType, item);
-            }
-            return dictionary;
-        }
-
         private (Binary binarySent, BsonDocument document) ProcessContextToCompletion(CryptContext context, bool isKmsDecrypt = true)
         {
             BsonDocument document = null;

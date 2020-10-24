@@ -27,29 +27,22 @@ namespace MongoDB.Libmongocrypt
     {
         private readonly IReadOnlyList<byte[]> _alternateKeyNameBytes;
         private readonly byte[] _dataKeyOptionsBytes;
-        private readonly KmsType _kmsType;
 
         /// <summary>
         /// Creates an <see cref="KmsKeyId"/> class.
         /// </summary>
-        /// <param name="kmsType">The kms type.</param>
         /// <param name="dataKeyOptionsBytes">The bytes representation of dataOptions bson document.</param>
         /// <param name="alternateKeyNameBytes">The bytes representation of alternate keyName.</param>
         public KmsKeyId(
-            KmsType kmsType,
             byte[] dataKeyOptionsBytes,
             IEnumerable<byte[]> alternateKeyNameBytes = null)
         {
-            _kmsType = kmsType;
             _dataKeyOptionsBytes = dataKeyOptionsBytes ?? throw new ArgumentNullException(nameof(dataKeyOptionsBytes));
             _alternateKeyNameBytes = (alternateKeyNameBytes ?? Enumerable.Empty<byte[]>()).ToList().AsReadOnly();
         }
 
         /// <inheritdoc />
         public IReadOnlyList<byte[]> AlternateKeyNameBytes => _alternateKeyNameBytes;
-
-        /// <inheritdoc />
-        public KmsType KeyType => _kmsType;
 
         // internal methods
         internal void SetAlternateKeyNames(ContextSafeHandle context, Status status)

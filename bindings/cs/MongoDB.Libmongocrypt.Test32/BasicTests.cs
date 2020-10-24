@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
 using MongoDB.Bson;
@@ -24,9 +23,9 @@ namespace MongoDB.Libmongocrypt.Test32
 {
     public class BasicTests
     {
-        BsonDocument CreateAwsCredentialsDocument() => 
-            new BsonDocument
-                {
+        BsonDocument CreateAwsCredentialsDocument() =>
+           new BsonDocument
+               {
                     {
                         "aws",
                         new BsonDocument
@@ -35,18 +34,13 @@ namespace MongoDB.Libmongocrypt.Test32
                             { "accessKeyId", "us-east-1" }
                         }
                     }
-                };
+               };
 
-        CryptOptions CreateOptions() => 
+        CryptOptions CreateOptions() =>
             new CryptOptions(
-                new Dictionary<KmsType, KmsCredentials>()
+                new[]
                 {
-                    {
-                        KmsType.Aws,
-                        new KmsCredentials(
-                            KmsType.Aws,
-                            CreateAwsCredentialsDocument().ToBson())
-                    }
+                    new KmsCredentials(CreateAwsCredentialsDocument().ToBson())
                 }
             );
 

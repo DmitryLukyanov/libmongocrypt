@@ -8,20 +8,15 @@ namespace MongoDB.Libmongocrypt
     public class KmsCredentials
     {
         private readonly byte[] _credentialsBytes;
-        private readonly KmsType _kmsType;
 
         /// <summary>
         /// Creates an <see cref="KmsCredentials"/> class.
         /// </summary>
-        /// <param name="kmsType">The kms type.</param>
         /// <param name="credentialsBytes">The bytes representation of credentials bson document.</param>
-        public KmsCredentials(KmsType kmsType, byte[] credentialsBytes)
+        public KmsCredentials(byte[] credentialsBytes)
         {
             _credentialsBytes = credentialsBytes ?? throw new ArgumentNullException(nameof(credentialsBytes));
-            _kmsType = kmsType;
         }
-
-        public KmsType KmsType => _kmsType;
 
         // internal methods
         internal void SetCredentials(MongoCryptSafeHandle handle, Status status)
