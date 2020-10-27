@@ -59,7 +59,7 @@ namespace MongoDB.Libmongocrypt
             candidatePaths.Add(basepath);
             // TODO - .NET Standard 2.0
 
-            switch (OperatingSystemHelper.CurrentOperationSystem)
+            switch (OperatingSystemHelper.CurrentOperatingSystem)
             {
                 case OperatingSystemPlatform.MacOS:
                     {
@@ -95,8 +95,8 @@ namespace MongoDB.Libmongocrypt
                     }
                     break;
                 default:
-                    // should not be reached. If we're here, then there is a bug in OperationSystemHelper
-                    throw new PlatformNotSupportedException("Unexpected operation system.");
+                    // should not be reached. If we're here, then there is a bug in OperatingSystemHelper
+                    throw new PlatformNotSupportedException("Unexpected operating system.");
             }
         }
 

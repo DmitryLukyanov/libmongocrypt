@@ -30,11 +30,13 @@ namespace MongoDB.Libmongocrypt
 
     internal static class OperatingSystemHelper
     {
-        public static OperatingSystemPlatform CurrentOperationSystem
+        public static OperatingSystemPlatform CurrentOperatingSystem
         {
             get
             {
-#if !NET452
+#if NET452
+                return OperatingSystemPlatform.Windows;
+#else
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     return OperatingSystemPlatform.MacOS;
@@ -43,14 +45,14 @@ namespace MongoDB.Libmongocrypt
                 {
                     return OperatingSystemPlatform.Linux;
                 }
-                else if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    // should not be reached. If we're here, then there is a bug in the library
-                    throw new PlatformNotSupportedException($"Unexpected os platform {RuntimeInformation.OSDescription}.");
+                    return OperatingSystemPlatform.Windows;
                 }
-                else
+
+                // should not be reached. If we're here, then there is a bug in the library
+                throw new PlatformNotSupportedException($"Unexpected os platform {RuntimeInformation.OSDescription}.");
 #endif
-                return OperatingSystemPlatform.Windows;
             }
         }
     }
