@@ -21,27 +21,27 @@ using System.Runtime.InteropServices;
 
 namespace MongoDB.Libmongocrypt
 {
-    internal enum OperationSystemPlatform
+    internal enum OperatingSystemPlatform
     {
         Windows,
         Linux,
         MacOS
     }
 
-    internal static class OperationSystemHelper
+    internal static class OperatingSystemHelper
     {
-        public static OperationSystemPlatform CurrentOperationSystem
+        public static OperatingSystemPlatform CurrentOperationSystem
         {
             get
             {
 #if !NET452
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
-                    return OperationSystemPlatform.MacOS;
+                    return OperatingSystemPlatform.MacOS;
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
-                    return OperationSystemPlatform.Linux;
+                    return OperatingSystemPlatform.Linux;
                 }
                 else if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -50,7 +50,7 @@ namespace MongoDB.Libmongocrypt
                 }
                 else
 #endif
-                return OperationSystemPlatform.Windows;
+                return OperatingSystemPlatform.Windows;
             }
         }
     }

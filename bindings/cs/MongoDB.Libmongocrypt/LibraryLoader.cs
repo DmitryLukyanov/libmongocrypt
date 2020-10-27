@@ -59,9 +59,9 @@ namespace MongoDB.Libmongocrypt
             candidatePaths.Add(basepath);
             // TODO - .NET Standard 2.0
 
-            switch (OperationSystemHelper.CurrentOperationSystem)
+            switch (OperatingSystemHelper.CurrentOperationSystem)
             {
-                case OperationSystemPlatform.MacOS:
+                case OperatingSystemPlatform.MacOS:
                     {
                         string[] suffixPaths = new[]
                         {
@@ -72,7 +72,7 @@ namespace MongoDB.Libmongocrypt
                         _loader = new DarwinLibraryLoader(path);
                     }
                     break;
-                case OperationSystemPlatform.Linux:
+                case OperatingSystemPlatform.Linux:
                     {
                         string[] suffixPaths = new[]
                         {
@@ -83,7 +83,7 @@ namespace MongoDB.Libmongocrypt
                         _loader = new LinuxLibrary(path);
                     }
                     break;
-                case OperationSystemPlatform.Windows:
+                case OperatingSystemPlatform.Windows:
                     {
                         string[] suffixPaths = new[]
                         {
