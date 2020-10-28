@@ -51,7 +51,7 @@ namespace MongoDB.Libmongocrypt
                 }
 
                 // should not be reached. If we're here, then there is a bug in the library
-                throw new PlatformNotSupportedException($"Unexpected os platform {RuntimeInformation.OSDescription}.");
+                throw new PlatformNotSupportedException($"Unsupported platform '{RuntimeInformation.OSDescription}'.");
 #endif
             }
         }

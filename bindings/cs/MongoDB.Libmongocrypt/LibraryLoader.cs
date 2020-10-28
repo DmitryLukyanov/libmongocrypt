@@ -96,7 +96,7 @@ namespace MongoDB.Libmongocrypt
                     break;
                 default:
                     // should not be reached. If we're here, then there is a bug in OperatingSystemHelper
-                    throw new PlatformNotSupportedException("Unexpected operating system.");
+                    throw new PlatformNotSupportedException("Unsupported operating system.");
             }
         }
 
