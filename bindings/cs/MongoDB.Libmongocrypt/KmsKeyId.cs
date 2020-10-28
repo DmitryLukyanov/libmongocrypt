@@ -31,8 +31,8 @@ namespace MongoDB.Libmongocrypt
         /// <summary>
         /// Creates an <see cref="KmsKeyId"/> class.
         /// </summary>
-        /// <param name="dataKeyOptionsBytes">The bytes representation of dataOptions bson document.</param>
-        /// <param name="alternateKeyNameBytes">The bytes representation of alternate keyName.</param>
+        /// <param name="dataKeyOptionsBytes">The byte representation of dataOptions bson document.</param>
+        /// <param name="alternateKeyNameBytes">The byte representation of alternate keyName.</param>
         public KmsKeyId(
             byte[] dataKeyOptionsBytes,
             IEnumerable<byte[]> alternateKeyNameBytes = null)

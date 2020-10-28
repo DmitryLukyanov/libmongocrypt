@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace MongoDB.Libmongocrypt
 {
@@ -35,7 +34,7 @@ namespace MongoDB.Libmongocrypt
 
             foreach (var kmsCredentials in options.KmsCredentials)
             {
-                kmsCredentials.SetCredentials(handle,status);
+                kmsCredentials.SetCredentials(handle, status);
             }
 
             if (options.Schema != null)

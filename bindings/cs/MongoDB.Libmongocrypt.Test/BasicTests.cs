@@ -44,12 +44,11 @@ namespace MongoDB.Libmongocrypt.Test
                     "local",
                     new BsonDocument
                     {
-                        {
-                            "key", new BsonBinaryData(new byte[96])
-                        }
+                        { "key", new BsonBinaryData(new byte[96]) }
                     }
                 }
             };
+
         KmsKeyId CreateLocalKey(IEnumerable<byte[]> keyAltNameBuffers = null) =>
             new KmsKeyId(
                 new BsonDocument
@@ -57,6 +56,7 @@ namespace MongoDB.Libmongocrypt.Test
                     { "provider", "local" },
                 }.ToBson(),
                 keyAltNameBuffers);
+
         KmsCredentials CreateLocalKmsCredentials() =>
             new KmsCredentials(
                 CreateLocalCredentialsDocument().ToBson());

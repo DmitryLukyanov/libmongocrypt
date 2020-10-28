@@ -378,10 +378,9 @@ namespace drivertest
                     { "provider", "aws" },
                     { "region", "us-east-1" },
                     { "key", "arn:aws:kms:us-east-1:579766882180:key/0689eb07-d588-4bbf-a83e-42157a92576b" }
-                }.ToBson())
-            ;
+                }.ToBson());
 
-            KmsCredentials kmsCredentials = new KmsCredentials(
+            var kmsCredentials = new KmsCredentials(
                 new BsonDocument
                 {
                     {  "aws",

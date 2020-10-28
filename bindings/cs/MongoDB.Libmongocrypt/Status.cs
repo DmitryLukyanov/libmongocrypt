@@ -80,14 +80,14 @@ namespace MongoDB.Libmongocrypt
         {
             if (!Library.mongocrypt_status_ok(_handle))
             {
-                var errorType = Library.mongocrypt_status_type(_handle);
+                var statusType = Library.mongocrypt_status_type(_handle);
                 var statusCode = Library.mongocrypt_status_code(_handle);
 
                 uint length;
                 IntPtr msgPtr = Library.mongocrypt_status_message(_handle, out length);
                 var message = Marshal.PtrToStringAnsi(msgPtr);
 
-                throw new CryptException(errorType, statusCode, message);
+                throw new CryptException(statusType, statusCode, message);
             }
         }
     }

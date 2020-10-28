@@ -26,9 +26,9 @@ namespace MongoDB.Libmongocrypt
         private readonly byte[] _credentialsBytes;
 
         /// <summary>
-        /// Creates an <see cref="KmsCredentials"/> class.
+        /// Creates a <see cref="KmsCredentials"/> class.
         /// </summary>
-        /// <param name="credentialsBytes">The bytes representation of credentials bson document.</param>
+        /// <param name="credentialsBytes">The byte representation of credentials bson document.</param>
         public KmsCredentials(byte[] credentialsBytes)
         {
             _credentialsBytes = credentialsBytes ?? throw new ArgumentNullException(nameof(credentialsBytes));
