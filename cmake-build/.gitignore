@@ -15,7 +15,7 @@ CMakeCache.txt
 CTestTestFile.cmake
 CMakeFiles
 CMakeScripts
-Debug/*
+
 Makefile
 Win32/*
 cmake_install.cmake
@@ -37,8 +37,8 @@ install_manifest.txt
 *.lo
 *.o
 *.pc
-*.so
-*.so.*
+!*.so
+!*.so.*
 
 # Generated header
 src/mongocrypt-export.h
