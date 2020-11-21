@@ -383,6 +383,8 @@ tasks:
   commands:
   - func: "fetch source"
   - func: "build csharp and test"
+    vars:
+      test_env: PROJECT_DIRECTORY=${project_directory}
 
 - name: build-and-test-node
   depends_on:
