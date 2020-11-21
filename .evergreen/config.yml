@@ -968,6 +968,7 @@ buildvariants:
   - build-and-test-asan
   - build-and-test-java
   - build-and-test-node
+  - build-csharp-and-test
   - name: publish-packages
     distros:
     - ubuntu1804-test
