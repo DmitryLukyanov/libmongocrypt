@@ -4,6 +4,7 @@ test/schema.json
 
 .vscode
 # Default build directories
+cmake-build
 cmake-build-nocrypto
 
 # CMake generated files
