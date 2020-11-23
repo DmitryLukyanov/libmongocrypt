@@ -64,7 +64,7 @@
       <Pack>true</Pack>
       <PackagePath>runtimes/win/native</PackagePath>
     </Content>
-    <Content Include="$(LibMongoCryptBinaries)/mongocrypt.so">
+    <Content Include="$(LibMongoCryptBinaries)/libmongocrypt.so">
       <Pack>true</Pack>
       <PackagePath>runtimes/linux/native</PackagePath>
     </Content>
