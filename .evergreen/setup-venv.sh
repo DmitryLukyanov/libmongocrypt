@@ -15,7 +15,7 @@ if [ "$VIRTUAL_ENV" != "$(pwd)/venv" ]; then
         fi
     else
         echo "venv not found: creating, installing, and activating"
-        python -m virtualenv venv
+        python -m venv venv
         if [ "Windows_NT" == "$OS" ]; then
             . ./venv/Scripts/activate
         else
