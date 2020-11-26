@@ -19,7 +19,7 @@ using System.Security.Cryptography;
 
 namespace MongoDB.Libmongocrypt
 {
-    internal static class HmacShaCallbacks
+    public static class HmacShaCallbacks
     {
         public static bool HmacSha512(
             IntPtr ctx,

@@ -19,7 +19,7 @@ using System.Security.Cryptography;
 
 namespace MongoDB.Libmongocrypt
 {
-    internal static class HashCallback
+    public static class HashCallback
     {
         public static bool Hash(
             IntPtr ctx,

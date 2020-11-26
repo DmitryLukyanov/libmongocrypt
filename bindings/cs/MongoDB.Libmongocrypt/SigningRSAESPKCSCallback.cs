@@ -21,7 +21,7 @@ using System.Security.Cryptography;
 
 namespace MongoDB.Libmongocrypt
 {
-    internal static class SigningRSAESPKCSCallback
+    public static class SigningRSAESPKCSCallback
     {
         public static bool RsaSign(
             IntPtr ctx,

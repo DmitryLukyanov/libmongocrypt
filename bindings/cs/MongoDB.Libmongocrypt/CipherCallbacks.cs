@@ -19,13 +19,13 @@ using System.Security.Cryptography;
 
 namespace MongoDB.Libmongocrypt
 {
-    internal enum CryptMode
+    public enum CryptMode
     {
         Encrypt,
         Decrypt
     }
 
-    internal static class CipherCallbacks
+    public static class CipherCallbacks
     {
         public static bool Encrypt(
             IntPtr ctx,
