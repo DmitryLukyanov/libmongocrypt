@@ -24,27 +24,7 @@ namespace MongoDB.Libmongocrypt.Test.Callbacks
         [Fact]
         public void CipherTest()
         {
-            var keyHex = "92faa793d717675e2be804584a8a98252083fe6bf16010546a92e2ef4bdd27fd";
-            var ivHex = "31164b2f661e41fed5df60bfcfa40baa";
-            var inputHex = "379ddb78c30e5e4bf19dd81ae705796f";
-            var expectedHex = "671db60d464b09e9c3b03242dd29bdc5";
-
-            var keyBytes = CallbackUtils.GetBytesFromHex(keyHex);
-            var ivBytes = CallbackUtils.GetBytesFromHex(ivHex);
-            var inputBytes = CallbackUtils.GetBytesFromHex(inputHex); // decryptedBytes
-            var expectedEncryptedBytes = CallbackUtils.GetBytesFromHex(expectedHex);
-#if !NETCOREAPP1_1
-            var encryptedBytes = CipherCallbacks.AesCrypt(keyBytes, ivBytes, inputBytes, CryptMode.Encrypt);
-            encryptedBytes.Should().Equal(expectedEncryptedBytes);
-
-            var decryptedBytes = CipherCallbacks.AesCrypt(keyBytes, ivBytes, encryptedBytes, CryptMode.Decrypt);
-            decryptedBytes.Should().Equal(inputBytes);
-#else
-            var exception = Record.Exception(() => CipherCallbacks.AesCrypt(keyBytes, ivBytes, inputBytes, CryptMode.Encrypt));
-            exception.Should().BeOfType<System.PlatformNotSupportedException>();
-            exception = Record.Exception(() => CipherCallbacks.AesCrypt(keyBytes, ivBytes, inputBytes, CryptMode.Decrypt));
-            exception.Should().BeOfType<System.PlatformNotSupportedException>();
-#endif
+            throw new System.Exception("test");
         }
     }
 }
