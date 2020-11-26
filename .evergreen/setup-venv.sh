@@ -15,10 +15,12 @@ if [ "$VIRTUAL_ENV" != "$(pwd)/venv" ]; then
         fi
     else
         echo "venv not found: creating, installing, and activating"
-         /opt/mongodbtoolchain/v3/bin/python3 -m venv venv
+
         if [ "Windows_NT" == "$OS" ]; then
+			python -m virtualenv venv
             . ./venv/Scripts/activate
         else
+			/opt/mongodbtoolchain/v3/bin/python3 -m venv venv
             . ./venv/bin/activate
         fi
 
