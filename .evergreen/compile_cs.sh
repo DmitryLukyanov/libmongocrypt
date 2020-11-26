@@ -16,9 +16,13 @@ evergreen_root="$(pwd)"
 
 cd $evergreen_root
 
+echo "before dotnet_tool"
+
 dotnet_tool=$(which dotnet)
 
 if [ "$OS" == "Windows_NT" ]; then
+	echo "OS Windows"
+
     # Make sure libbson.dll is in the path on Windows
     export PATH=${INSTALL_PREFIX}/mongo-c-driver/bin:$PATH
 
@@ -27,6 +31,7 @@ if [ "$OS" == "Windows_NT" ]; then
     # Make dotnet happy over ssh
     export DOTNET_CLI_HOME=$(cygpath -w "${evergreen_root}/dotnet_home")
 else
+	echo "OS Non Windows"
     export PATH=$PATH:/usr/share/dotnet
 fi
 
