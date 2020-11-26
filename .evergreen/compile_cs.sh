@@ -18,8 +18,6 @@ cd $evergreen_root
 
 echo "before dotnet_tool"
 
-dotnet_tool=$(which dotnet)
-
 if [ "$OS" == "Windows_NT" ]; then
 	echo "OS Windows"
 
@@ -32,8 +30,10 @@ if [ "$OS" == "Windows_NT" ]; then
     export DOTNET_CLI_HOME=$(cygpath -w "${evergreen_root}/dotnet_home")
 else
 	echo "OS Non Windows"
-   
+    export PATH=$PATH:/usr/share/dotnet
 fi
+
+dotnet_tool=$(which dotnet)
 
 "$dotnet_tool" build -c Release libmongocrypt/cmake-build/bindings/cs/cs.sln
 
